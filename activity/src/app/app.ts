@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import {PostComponent,Post} from './posts/posts.component';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
+  standalone: false,
   styleUrl: './app.css',
   templateUrl: './app.html',
 })

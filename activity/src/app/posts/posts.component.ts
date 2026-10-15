@@ -14,11 +14,12 @@ export class Post{
 
 @Component({
     selector: 'post-component',
+    standalone: false,
     templateUrl: './posts.component.html',
     styleUrls: ['./posts.component.css']
 })
 export class PostComponent implements OnInit {
-    @Input() post: Post;
+    @Input() post!: Post;
 
     constructor(){}
 
