@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {PostComponent,Post} from './posts/posts.component';
+import {data} from "./data";
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,5 @@ import {PostComponent,Post} from './posts/posts.component';
 })
 export class App {
   protected readonly title = signal('activity');
-  post = new Post("Mati", new Date, "Hello world!!");
+  posts = data;
 }

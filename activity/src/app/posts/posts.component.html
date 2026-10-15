@@ -1,9 +1,6 @@
-<h2>Recent posts</h2>
-
-<h4>Username</h4>
-<p>{{post.user}}</p>
-
-<h4>Published</h4>
-<p>{{post.published}}</p>
-<h4>Content</h4>
-<p>{{post.content}}</p>
+<div class="post-container">
+    <h2 class="post-username">{{post.user}}</h2>
+    <p class="post-date">{{post.published | date: 'shortDate'}}</p>
+    <p [ngClass]="hidden ? 'post-content-hidden' : 'post-content'">{{post.content}}</p>
+    <button class="post-button" (click)="hideContent()">{{hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
+</div>
