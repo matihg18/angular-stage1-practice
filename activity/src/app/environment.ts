@@ -1,0 +1,1 @@
+export const baseUrl = 'https://asmisalan.github.io/feedgram/posts.json'
