@@ -1,6 +1,6 @@
 import { platformBrowser } from '@angular/platform-browser';
-import { PostModule } from './app/posts/post.module';
+import { AppModule } from './app/app.module';
 
 platformBrowser()
-  .bootstrapModule(PostModule)
+  .bootstrapModule(AppModule)
   .catch(err => console.error(err));

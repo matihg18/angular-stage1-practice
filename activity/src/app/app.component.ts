@@ -9,6 +9,6 @@ import {Post} from './posts/post';
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
-export class App {
+export class AppComponent {
   protected readonly title = signal('activity');
 }
