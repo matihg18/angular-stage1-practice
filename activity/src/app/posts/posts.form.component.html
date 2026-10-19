@@ -1,0 +1,10 @@
+<h2>Post what you'r thinking</h2>
+<div>
+    <form [formGroup]="postForm" (ngSubmit)="submit()">
+        <p>User name:</p>
+        <input type="text" formControlName="user">
+        <p>Content:</p>
+        <input type="text" formControlName="content"> 
+        <button [disabled]="postForm.invalid">Submit</button>
+    </form>
+</div>

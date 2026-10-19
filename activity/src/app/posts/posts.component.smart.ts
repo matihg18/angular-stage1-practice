@@ -15,7 +15,7 @@ import {PostService} from './post.service';
     constructor(private postService: PostService){}
 
     ngOnInit(){
-        this.posts$ = this.postService.getAllPost();
-        this.posts$.subscribe(val => console.log(val));
+        this.posts$ = this.postService.allPosts$;
+        this.postService.loadPosts();
     }
 }

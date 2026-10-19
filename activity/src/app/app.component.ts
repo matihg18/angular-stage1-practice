@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {PostComponentSmart} from './posts/posts.component.smart';
 import {Post} from './posts/post';
 
 @Component({
