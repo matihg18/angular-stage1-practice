@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import {Post} from "./post"
+import {Post} from "../post"
 
 @Component({
     selector: 'post-list-component',

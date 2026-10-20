@@ -2,10 +2,10 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PostComponentSmart } from './posts.component.smart';
-import { PostComponentDumb} from './posts.component.dumb';
-import { PostListComponent } from './postslist.component';
-import { PostFormComponent } from './posts.form.component'
+import { PostComponentSmart } from './posts-list/posts.component.smart';
+import { PostComponentDumb} from './posts-list/posts.component.dumb';
+import { PostListComponent } from './posts-list/postslist.component';
+import { PostFormComponent } from './posts-form/posts.form.component'
 
 import { RouterModule, Routes } from '@angular/router';
 

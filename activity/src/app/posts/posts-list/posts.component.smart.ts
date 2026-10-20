@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Post} from './post';
+import {Post} from '../post';
 import {Observable} from 'rxjs';
-import {PostService} from './post.service';
+import {PostService} from '../post.service';
 
 @Component({
     selector: 'post-component-smart',

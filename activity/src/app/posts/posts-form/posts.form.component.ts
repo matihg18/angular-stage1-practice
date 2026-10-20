@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {PostService} from './post.service';
+import {PostService} from '../post.service';
 import {Observable} from 'rxjs';
-import {Post} from './post'
+import {Post} from '../post'
 import {Router, ActivatedRoute} from '@angular/router'
 
 @Component({
