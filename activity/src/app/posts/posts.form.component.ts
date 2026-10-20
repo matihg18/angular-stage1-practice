@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {PostService} from './post.service';
 import {Observable} from 'rxjs';
 import {Post} from './post'
-import {Router} from '@angular/router'
+import {Router, ActivatedRoute} from '@angular/router'
 
 @Component({
     selector: 'posts-form-component',
@@ -12,7 +12,7 @@ import {Router} from '@angular/router'
     styleUrls: ['./posts.form.component.css']
 }) export class PostFormComponent implements OnInit{
 
-    public posts$!: Observable<Post[]>;
+    private idEditingPost: number | null = null;
 
     postForm = new FormGroup({
         user: new FormControl('',[Validators.required]),
@@ -20,17 +20,25 @@ import {Router} from '@angular/router'
     });
     
 
-    constructor(private postService: PostService, private router: Router){}
+    constructor(private postService: PostService, private router: Router, private route: ActivatedRoute){}
 
     ngOnInit(){
-        this.posts$ = this.postService.allPosts$;
         this.postService.loadPosts();
+        
+        const id = this.route.snapshot.paramMap.get('id');
+        if (id) {
+            this.idEditingPost = Number(id);
+            const post = this.postService.getPostById(this.idEditingPost);
+            if (post) {this.postForm.patchValue(post)};
+        }   
     }
 
     submit(){
-        let post = this.postForm.value as Post;
-        post.published = new Date;
-        this.postService.addPost(this.postForm.value as Post);
+        if (this.idEditingPost !== null) {
+            this.postService.updatePost(this.idEditingPost,this.postForm.value as Post);
+        } else {
+            this.postService.addPost(this.postForm.value as Post);
+        }
         this.router.navigate(['/posts/list']);
     }
 }

@@ -44,3 +44,8 @@
     margin-bottom: 10px;
     padding: 0;
 }
+
+.button-container{
+    display: flex;
+    justify-content: space-between;
+}

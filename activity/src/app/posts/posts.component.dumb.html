@@ -2,5 +2,8 @@
     <h2 class="post-username">{{post.user}}</h2>
     <p class="post-date">{{post.published | date: 'shortDate'}}</p>
     <p [ngClass]="hidden ? 'post-content-hidden' : 'post-content'">{{post.content}}</p>
-    <button class="post-button" (click)="hideContent()">{{hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
+    <div class="button-container">
+        <button class="post-button" (click)="hideContent()">{{hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
+        <button class="post-button" [routerLink]="['..','edit',post.id]">UPDATE POST</button>
+    </div>
 </div>

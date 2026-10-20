@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Post} from './post';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'post-component-dumb',

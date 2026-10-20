@@ -1,11 +1,6 @@
-export class Post{
+export interface Post{
+    id: number;
     user: string;
     published: Date;
     content: string;
-
-    constructor(user: string, published: Date, content: string) {
-        this.user = user;
-        this.published = published;
-        this.content = content;
-    }
 }

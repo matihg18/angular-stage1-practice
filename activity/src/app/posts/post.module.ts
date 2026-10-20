@@ -19,6 +19,10 @@ const routes: Routes = [
     component: PostFormComponent
   },
   {
+    path: 'edit/:id',
+    component: PostFormComponent
+  },
+  {
     path: '',
     redirectTo: 'list',
     pathMatch: 'full'
