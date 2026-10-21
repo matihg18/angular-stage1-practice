@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {PostService} from '../post.service';
-import {Observable} from 'rxjs';
-import {Post} from '../post'
-import {Router, ActivatedRoute} from '@angular/router'
+import {Post} from '../post';
+import {Router, ActivatedRoute} from '@angular/router';
+import { Store } from '@ngrx/store';
+import { getEditingPost } from '../state/posts.selectors';
+import { createPostRequested, getPostByIdRequested, updatePostRequested } from '../state/posts.actions';
+import { filter, take } from 'rxjs';
 
 @Component({
     selector: 'posts-form-component',
@@ -20,24 +22,22 @@ import {Router, ActivatedRoute} from '@angular/router'
     });
     
 
-    constructor(private postService: PostService, private router: Router, private route: ActivatedRoute){}
+    constructor(private store: Store, private router: Router, private route: ActivatedRoute){}
 
     ngOnInit(){
-        this.postService.loadPosts();
-        
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {
             this.idEditingPost = Number(id);
-            const post = this.postService.getPostById(this.idEditingPost);
-            if (post) {this.postForm.patchValue(post)};
+            this.store.dispatch(getPostByIdRequested({id: this.idEditingPost}))
+            this.store.select(getEditingPost).pipe(filter((post): post is Post => !!post, take(1))).subscribe(post => this.postForm.patchValue(post));
         }   
     }
 
     submit(){
         if (this.idEditingPost !== null) {
-            this.postService.updatePost(this.idEditingPost,this.postForm.value as Post);
+            this.store.dispatch(updatePostRequested({id: this.idEditingPost,changes: this.postForm.value as Post}));
         } else {
-            this.postService.addPost(this.postForm.value as Post);
+            this.store.dispatch(createPostRequested({post: this.postForm.value as Post}));
         }
         this.router.navigate(['/posts/list']);
     }

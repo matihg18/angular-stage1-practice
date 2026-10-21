@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Post} from '../post';
 import {Observable} from 'rxjs';
-import {PostService} from '../post.service';
+import { Store } from '@ngrx/store';
+import { getPosts, getPostsLoaded } from '../state/posts.selectors';
+import { loadPostsRequested } from '../state/posts.actions';
 
 @Component({
     selector: 'post-component-smart',
@@ -10,12 +12,15 @@ import {PostService} from '../post.service';
     styleUrls: ['./posts.component.smart.css']
 }) export class PostComponentSmart implements OnInit {
 
-    public posts$!: Observable<Post[]>;
+    public posts$: Observable<Post[]>;
+    private postsLoaded$: Observable<boolean>;
 
-    constructor(private postService: PostService){}
+    constructor(private store: Store){
+        this.posts$ = this.store.select(getPosts);
+        this.postsLoaded$ = this.store.select(getPostsLoaded);
+    };
 
     ngOnInit(){
-        this.posts$ = this.postService.allPosts$;
-        this.postService.loadPosts();
-    }
+        this.store.dispatch(loadPostsRequested());
+    };
 }

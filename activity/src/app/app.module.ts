@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BASE_URL } from './posts/post.service';
 import { baseUrl } from './environment';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 const routes: Routes = [
   {
@@ -22,7 +23,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), StoreModule.forRoot({}, {})],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(routes),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+  ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   providers: [{ provide: BASE_URL, useValue: baseUrl }],

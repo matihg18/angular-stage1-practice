@@ -11,40 +11,33 @@ export const BASE_URL = new InjectionToken<string>('BASE_URL');
 )
 export class PostService{
 
-    private subject = new BehaviorSubject<Post[]>([]);
-    public allPosts$ = this.subject.asObservable();
-    private loaded = false;
+    public posts = [...POSTS]
 
     constructor(
         private httpClient: HttpClient,
         @Inject(BASE_URL) public baseUrl: string
     ){}
 
-    public loadPosts(){
-        if (this.loaded) return;
-        this.getAllPost().subscribe(posts => this.subject.next(posts));
-        this.loaded=true;
-    }
-
-    public getAllPost(){
-        //return this.httpClient.get<Post[]>(`${this.baseUrl}`);
-        return of(POSTS); //Esto es para tener los ids, que necesito para editar comentarios y que en el json no vienen.
+    public getAllPosts(){
+        return of(this.posts)
     }
 
     public addPost(post: Post) {
-        post.published = new Date;
-        post.id = this.subject.value.length+1;
-        this.subject.next([...this.subject.value, post]);
+        const newPost = {
+            ...post,
+            id: Math.max(0, ...this.posts.map(p => p.id)) + 1,
+            published: new Date
+        } as Post;
+        this.posts = [...this.posts, newPost];
+        return of(newPost)
     }
 
     public updatePost(id: number, changes: Partial<Post>) {
-        const updatedList = this.subject.value.map(
-            post => post.id === id ? {...post,...changes} : post
-        );
-        this.subject.next(updatedList);
+        this.posts = this.posts.map(post => post.id === id ? {...post, ...changes} : post);
+        return of(this.posts.find(post => post.id === id))
     }
 
     public getPostById(id: number) {
-        return this.subject.value.find(post => post.id === id);
+        return of(this.posts.find(post => post.id === id))
     }
 }
