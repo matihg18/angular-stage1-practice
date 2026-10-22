@@ -40,4 +40,8 @@ export class PostService{
     public getPostById(id: number) {
         return of(this.posts.find(post => post.id === id))
     }
+
+    public getPostsCount(){
+        return of(this.posts.length)
+    }
 }

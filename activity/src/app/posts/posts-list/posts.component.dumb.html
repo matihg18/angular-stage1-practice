@@ -1,9 +1,14 @@
 <div class="post-container">
-    <h2 class="post-username">{{post.user}}</h2>
-    <p class="post-date">{{post.published | date: 'shortDate'}}</p>
-    <p [ngClass]="hidden ? 'post-content-hidden' : 'post-content'">{{post.content}}</p>
-    <div class="button-container">
-        <button class="post-button" (click)="hideContent()">{{hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
-        <button class="post-button" [routerLink]="['..','edit',post.id]">UPDATE POST</button>
-    </div>
+
+    <ng-container *ngIf="store.vm$ | async as vm">
+        <div *ngIf="vm.post as post">
+            <h2 class="post-username">{{post.user}}</h2>
+            <p class="post-date">{{post.published | date: 'shortDate'}}</p>
+            <p [ngClass]="vm.hidden ? 'post-content-hidden' : 'post-content'">{{post.content}}</p>
+            <div class="button-container">
+                <button class="post-button" (click)="store.changeHidden()">{{vm.hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
+                <button class="post-button" [routerLink]="['..','edit',post.id]">UPDATE POST</button>
+            </div>
+        </div>
+    </ng-container>
 </div>

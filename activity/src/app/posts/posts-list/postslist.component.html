@@ -1,7 +1,9 @@
 <h1>List of Posts</h1>
 <ul class="post-list">
-    <li *ngFor="let post of posts">
-        <post-component-dumb [post]="post"></post-component-dumb>
-    </li>
+    <div *ngIf="store.vm$ | async as vm">
+        <li *ngFor="let post of vm.posts">
+            <post-component-dumb [post]="post"></post-component-dumb>
+        </li>
+    </div>
 </ul>
 <button [routerLink]="['..','create']">Make a post</button>

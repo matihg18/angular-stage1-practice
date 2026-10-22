@@ -1,20 +1,56 @@
-import { Component, signal } from '@angular/core';
+import { Component, Injectable, signal, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getPostsCount } from './posts/state/posts.selectors';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { inject } from '@angular/core';
+import { ComponentStore } from '@ngrx/component-store';
+import { PostService } from './posts/post.service';
+import { tapResponse } from '@ngrx/operators';
+
+export interface AppComponentState {
+  postsCount: number
+}
+
+@Injectable()
+export class AppComponentStore extends ComponentStore<AppComponentState> {
+  readonly vm$ = this.select((state) => ({postsCount: state.postsCount}))
+
+  constructor(private postService: PostService){
+    super({
+      postsCount: 0
+    })
+  }
+
+  readonly setPostsCount = this.updater((state, postsCount: number) => ({...state, postsCount: postsCount}));
+  readonly setError = this.updater((state, error: string) => ({...state, error}))
+
+  readonly getPostsTotalCount = this.effect<void>(
+    (trigger$) => trigger$.pipe(
+      switchMap(() => 
+        this.postService.getPostsCount().pipe(
+          tapResponse({
+            next: (postsCount) => this.setPostsCount(postsCount),
+            error: (err) => this.setError('Couldnt get the posts count')
+          })
+        )
+      )
+    )
+  )
+}
 
 @Component({
   selector: 'app-root',
   standalone: false,
   styleUrl: './app.css',
   templateUrl: './app.html',
+  providers: [AppComponentStore]
 })
-export class AppComponent {
-  protected readonly title = signal('activity');
+export class AppComponent implements OnInit{
+  protected readonly title = signal('activity')
 
-  private store = inject(Store);
-  protected postsCount = this.store.selectSignal(getPostsCount);
+  constructor(private store: AppComponentStore){}
 
-  constructor(){}
+  ngOnInit(){
+    this.store.getPostsTotalCount();
+  }
 }

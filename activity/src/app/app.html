@@ -1,5 +1,7 @@
 <nav>
-    There are {{postsCount()}} posts.
+    <div *ngIf="store.vm$ | async as vm">
+        There are {{vm.postsCount}} posts.
+    </div>
 </nav>
 <div class="container">
     <router-outlet></router-outlet>
