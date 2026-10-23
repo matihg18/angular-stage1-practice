@@ -1,6 +1,8 @@
 import {Component, Injectable, Input, OnInit} from "@angular/core";
 import {Post} from '../post';
 import { ComponentStore } from '@ngrx/component-store';
+import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 export interface DumbComponentState {
     post: Post | null,
@@ -27,9 +29,9 @@ export class DumbComponentStore extends ComponentStore<DumbComponentState> {
 
 @Component({
     selector: 'post-component-dumb',
-    standalone: false,
     templateUrl: './posts.component.dumb.html',
     styleUrls: ['./posts.component.dumb.css'],
+    imports: [CommonModule, RouterLink],
     providers: [DumbComponentStore]
 })
 export class PostComponentDumb implements OnInit {

@@ -1,6 +1,9 @@
 import {Component, Input, OnInit, ChangeDetectionStrategy, Injectable } from "@angular/core";
 import {Post} from "../post"
 import { ComponentStore } from "@ngrx/component-store";
+import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
+import { PostComponentDumb } from "./posts.component.dumb";
 
 export interface PostListComponentState {
     posts: Post[]
@@ -21,11 +24,11 @@ export class PostListComponentStore extends ComponentStore<PostListComponentStat
 
 @Component({
     selector: 'post-list-component',
-    standalone: false,
     templateUrl: './postslist.component.html',
     styleUrls: ['./postslist.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [PostListComponentStore]
+    providers: [PostListComponentStore],
+    imports: [CommonModule, RouterLink, PostComponentDumb]
 })
 export class PostListComponent implements OnInit {
     @Input() set posts(postList: Post[]){

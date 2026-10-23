@@ -1,8 +1,5 @@
 import { Component, Injectable, signal, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { getPostsCount } from './posts/state/posts.selectors';
-import { Observable, switchMap } from 'rxjs';
-import { inject } from '@angular/core';
+import { switchMap } from 'rxjs';
 import { ComponentStore } from '@ngrx/component-store';
 import { PostService } from './posts/post.service';
 import { tapResponse } from '@ngrx/operators';

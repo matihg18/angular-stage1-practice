@@ -4,6 +4,8 @@ import { ComponentStore } from "@ngrx/component-store";
 import { PostService } from "../post.service";
 import { exhaustMap, switchMap } from "rxjs";
 import { tapResponse } from '@ngrx/operators';
+import { CommonModule } from "@angular/common";
+import { PostListComponent } from "./postslist.component";
 
 export interface SmartComponentState{
     posts: Post[],
@@ -39,10 +41,10 @@ export class SmartComponentStore extends ComponentStore<SmartComponentState>{
 
 @Component({
     selector: 'post-component-smart',
-    standalone: false,
     templateUrl: './posts.component.smart.html',
     styleUrls: ['./posts.component.smart.css'],
-    providers: [SmartComponentStore]
+    providers: [SmartComponentStore],
+    imports: [CommonModule, PostListComponent]
 }) export class PostComponentSmart implements OnInit {
 
     constructor(private store: SmartComponentStore){};

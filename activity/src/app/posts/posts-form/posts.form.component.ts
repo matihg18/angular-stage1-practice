@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {Post} from '../post';
 import {Router, ActivatedRoute} from '@angular/router';
 import { Observable, switchMap, filter, tap } from 'rxjs';
@@ -63,10 +63,10 @@ export class FormComponentStore extends ComponentStore<FormComponentState>{
 
 @Component({
     selector: 'posts-form-component',
-    standalone: false,
     templateUrl: './posts.form.component.html',
     styleUrls: ['./posts.form.component.css'],
-    providers: [FormComponentStore]
+    providers: [FormComponentStore],
+    imports: [ReactiveFormsModule, FormsModule]
 }) export class PostFormComponent implements OnInit{
 
     postForm = new FormGroup({
