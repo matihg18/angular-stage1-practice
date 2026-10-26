@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit} from "@angular/core";
+import {Component, Injectable, Input, OnInit, input } from "@angular/core";
 import {Post} from '../post';
 import { ComponentStore } from '@ngrx/component-store';
 import { CommonModule } from "@angular/common";
@@ -36,11 +36,11 @@ export class DumbComponentStore extends ComponentStore<DumbComponentState> {
 })
 export class PostComponentDumb implements OnInit {
 
-    @Input() set post(value: Post | null) {
-        this.store.setPost(value);
-    }
+    post = input.required<Post | null>();
 
     constructor(readonly store: DumbComponentStore){}
 
-    ngOnInit(){}
+    ngOnInit(){
+      this.store.setPost(this.post());
+    }
 }

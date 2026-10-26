@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ChangeDetectionStrategy, Injectable } from "@angular/core";
+import {Component, Input, OnInit, ChangeDetectionStrategy, Injectable, input } from "@angular/core";
 import {Post} from "../post"
 import { ComponentStore } from "@ngrx/component-store";
 import { CommonModule } from "@angular/common";
@@ -9,7 +9,7 @@ export interface PostListComponentState {
     posts: Post[]
 }
 
-@Injectable() 
+@Injectable()
 export class PostListComponentStore extends ComponentStore<PostListComponentState>{
     readonly vm$ = this.select((state) => ({posts: state.posts}));
 
@@ -31,12 +31,12 @@ export class PostListComponentStore extends ComponentStore<PostListComponentStat
     imports: [CommonModule, RouterLink, PostComponentDumb]
 })
 export class PostListComponent implements OnInit {
-    @Input() set posts(postList: Post[]){
-        this.store.setPosts(postList)
-    };
+
+    posts = input.required<Post[]>();
 
     constructor(readonly store: PostListComponentStore){}
 
     ngOnInit(){
+      this.store.setPosts(this.posts())
     }
 }
