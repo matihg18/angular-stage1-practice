@@ -1,9 +1,13 @@
 <h1>List of Posts</h1>
-<ul class="post-list">
-    <div *ngIf="store.vm$ | async as vm">
-        <li *ngFor="let post of vm.posts">
-            <post-component-dumb [post]="post"></post-component-dumb>
+@if (store.vm$ | async; as vm) {
+  <ul class="post-list">
+      @for (post of vm.posts; track post){
+        <li>
+          <post-component-dumb [post]="post"></post-component-dumb>
         </li>
-    </div>
-</ul>
-<button [routerLink]="['..','create']">Make a post</button>
+      } @empty {
+        <p>There are no items.</p>
+      }
+  </ul>
+  <button [routerLink]="['..','create']">Make a post</button>
+}

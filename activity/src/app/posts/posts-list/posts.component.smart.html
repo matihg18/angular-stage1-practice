@@ -1,3 +1,3 @@
-<div *ngIf="store.vm$ | async as vm">
-    <post-list-component [posts]="vm.posts"></post-list-component>
-</div>
+@if (store.vm$ | async; as vm) {
+  <post-list-component [posts]="vm.posts"></post-list-component>
+}
