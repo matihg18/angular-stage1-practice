@@ -1,53 +1,36 @@
-import { Component, Injectable, signal, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs';
+import { Component, Injectable, signal } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { PostService } from './posts/post.service';
-import { tapResponse } from '@ngrx/operators';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 export interface AppComponentState {
   postsCount: number
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AppComponentStore extends ComponentStore<AppComponentState> {
-  readonly vm$ = this.select((state) => ({postsCount: state.postsCount}))
+  readonly vm = this.selectSignal((state) => (state.postsCount))
 
   constructor(private postService: PostService){
     super({
-      postsCount: 0
+      postsCount: postService.postsCount()
     })
+    this.setPostsCount(toObservable(this.postService.postsCount));
   }
 
-  readonly setPostsCount = this.updater((state, postsCount: number) => ({...state, postsCount: postsCount}));
-  readonly setError = this.updater((state, error: string) => ({...state, error}))
-
-  readonly getPostsTotalCount = this.effect<void>(
-    (trigger$) => trigger$.pipe(
-      switchMap(() => 
-        this.postService.getPostsCount().pipe(
-          tapResponse({
-            next: (postsCount) => this.setPostsCount(postsCount),
-            error: (err) => this.setError('Couldnt get the posts count')
-          })
-        )
-      )
-    )
-  )
+  readonly setError = this.updater((state, error: string) => ({...state, error}));
+  readonly setPostsCount = this.updater((state, postsCount: number) => ({...state, postsCount}));
 }
 
 @Component({
   selector: 'app-root',
   standalone: false,
   styleUrl: './app.css',
-  templateUrl: './app.html',
-  providers: [AppComponentStore]
+  templateUrl: './app.html'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   protected readonly title = signal('activity')
 
-  constructor(private store: AppComponentStore){}
 
-  ngOnInit(){
-    this.store.getPostsTotalCount();
-  }
+  constructor(private store: AppComponentStore){}
 }

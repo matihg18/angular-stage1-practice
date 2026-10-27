@@ -1,7 +1,5 @@
 <nav>
-  @if (store.vm$ | async; as vm){
-    <p>There are {{vm.postsCount}} posts.</p>
-  }
+    <p>There are {{store.vm()}} posts.</p>
 </nav>
 <div class="container">
     <router-outlet></router-outlet>

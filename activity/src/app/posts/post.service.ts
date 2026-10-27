@@ -1,22 +1,15 @@
-import {Injectable, InjectionToken, Inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Injectable, Inject, signal} from '@angular/core';
 import {Post} from './post';
-import { BehaviorSubject, of } from 'rxjs';
+import { of } from 'rxjs';
 import { POSTS } from '../data';
 
-export const BASE_URL = new InjectionToken<string>('BASE_URL');
-
-@Injectable(
-    {providedIn: 'root'}
-)
+@Injectable({providedIn: 'root'})
 export class PostService{
 
-    public posts = [...POSTS]
+    public posts = [...POSTS];
+    public postsCount = signal(this.posts.length);
 
-    constructor(
-        private httpClient: HttpClient,
-        @Inject(BASE_URL) public baseUrl: string
-    ){}
+    constructor(){}
 
     public getAllPosts(){
         return of(this.posts)
@@ -29,6 +22,7 @@ export class PostService{
             published: new Date
         } as Post;
         this.posts = [...this.posts, newPost];
+        this.postsCount.update(value => value+1);
         return of(newPost)
     }
 
@@ -39,9 +33,5 @@ export class PostService{
 
     public getPostById(id: number) {
         return of(this.posts.find(post => post.id === id))
-    }
-
-    public getPostsCount(){
-        return of(this.posts.length)
     }
 }
