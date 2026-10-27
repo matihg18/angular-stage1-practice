@@ -1,6 +1,6 @@
 <h1>List of Posts</h1>
 @if (store.vm$ | async; as vm) {
-  <ul class="post-list">
+  <ul [class]="'list-none'">
       @for (post of vm.posts; track post){
         <li>
           <post-component-dumb [post]="post"></post-component-dumb>

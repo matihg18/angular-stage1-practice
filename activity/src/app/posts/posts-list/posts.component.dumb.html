@@ -1,12 +1,12 @@
-<div class="post-container">
+<div [class]="'w-[250px] min-h-[150px] h-auto border border-gray-500 rounded-[10px] px-[20px] m-[10px]'">
   @if (store.vm$ | async; as vm) {
     @if (vm.post; as post) {
-      <h2 class="post-username">{{post.user}}</h2>
-              <p class="post-date">{{post.published | date: 'shortDate'}}</p>
-              <p [ngClass]="vm.hidden ? 'post-content-hidden' : 'post-content'">{{post.content}}</p>
-              <div class="button-container">
-                  <button class="post-button" (click)="store.changeHidden()">{{vm.hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
-                  <button class="post-button" [routerLink]="['..','edit',post.id]">UPDATE POST</button>
+      <h2 [class]="'text-[22px] mt-[10px] mb-0 text-[#1f2124]'">{{post.user}}</h2>
+              <p [class]="'text-[12px] m-0'">{{post.published | date: 'shortDate'}}</p>
+              <p [class]="'text-[12px]'" [class.line-clamp-2]="vm.hidden">{{ post.content }}</p>
+              <div [class]="'flex justify-between'">
+                  <button [class]="'bg-transparent text-[#00ff] border-0 font-medium m-0 p-0'" (click)="store.changeHidden()">{{vm.hidden ? 'VIEW MORE' : 'VIEW LESS'}}</button>
+                  <button [class]="'bg-transparent text-[#00ff] border-0 font-medium m-0 p-0'" [routerLink]="['..','edit',post.id]">UPDATE POST</button>
               </div>
   }
 }
