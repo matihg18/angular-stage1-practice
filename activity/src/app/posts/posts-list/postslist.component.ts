@@ -5,6 +5,8 @@ import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { PostComponentDumb } from "./posts.component.dumb";
 
+import { MatButtonModule } from "@angular/material/button";
+
 export interface PostListComponentState {
     posts: Post[]
 }
@@ -28,7 +30,7 @@ export class PostListComponentStore extends ComponentStore<PostListComponentStat
     styleUrls: ['./postslist.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [PostListComponentStore],
-    imports: [CommonModule, RouterLink, PostComponentDumb]
+    imports: [CommonModule, RouterLink, PostComponentDumb, MatButtonModule]
 })
 export class PostListComponent implements OnInit {
 

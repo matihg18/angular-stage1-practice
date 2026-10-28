@@ -3,6 +3,8 @@ import {Post} from '../post';
 import { ComponentStore } from '@ngrx/component-store';
 import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 export interface DumbComponentState {
     post: Post | null,
@@ -31,7 +33,7 @@ export class DumbComponentStore extends ComponentStore<DumbComponentState> {
     selector: 'post-component-dumb',
     templateUrl: './posts.component.dumb.html',
     styleUrls: ['./posts.component.dumb.css'],
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule],
     providers: [DumbComponentStore]
 })
 export class PostComponentDumb implements OnInit {

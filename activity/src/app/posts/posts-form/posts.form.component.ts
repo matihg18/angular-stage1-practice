@@ -6,6 +6,10 @@ import { Observable, switchMap, filter, tap } from 'rxjs';
 import { ComponentStore } from '@ngrx/component-store';
 import { PostService } from '../post.service';
 import { tapResponse } from '@ngrx/operators';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 
 export interface FormComponentState {
     idEditingPost: number | null,
@@ -15,7 +19,7 @@ export interface FormComponentState {
 
 @Injectable()
 export class FormComponentStore extends ComponentStore<FormComponentState>{
-    readonly idEditingPost$: Observable<number | null> = this.select((state) => state.idEditingPost); 
+    readonly idEditingPost$: Observable<number | null> = this.select((state) => state.idEditingPost);
     readonly post$: Observable<Post | null> = this.select((state) => state.post);
 
     constructor(private postService: PostService){
@@ -54,7 +58,7 @@ export class FormComponentStore extends ComponentStore<FormComponentState>{
 
     readonly updatePost = this.effect<{idEditingPost: number, post: Partial<Post>}>((params$) => {
         return params$.pipe(
-            switchMap(({idEditingPost, post}) => 
+            switchMap(({idEditingPost, post}) =>
                 this.postService.updatePost(idEditingPost, post)
             )
         )
@@ -66,14 +70,14 @@ export class FormComponentStore extends ComponentStore<FormComponentState>{
     templateUrl: './posts.form.component.html',
     styleUrls: ['./posts.form.component.css'],
     providers: [FormComponentStore],
-    imports: [ReactiveFormsModule, FormsModule]
+    imports: [ReactiveFormsModule, FormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule]
 }) export class PostFormComponent implements OnInit{
 
     postForm = new FormGroup({
         user: new FormControl('',[Validators.required]),
         content: new FormControl('')
     });
-    
+
     constructor(private store: FormComponentStore, private router: Router, private route: ActivatedRoute){}
 
     ngOnInit(){
@@ -85,7 +89,7 @@ export class FormComponentStore extends ComponentStore<FormComponentState>{
                 user: post?.user,
                 content: post?.content
             }));
-        }   
+        }
     }
 
     submit(){

@@ -1,10 +1,23 @@
-<h2>Post what you'r thinking</h2>
-<div>
+<mat-card appearance="outlined" [class]="'min-w-[250px] min-h-[150px] h-auto w-auto m-[10px]'">
+  <mat-card-header>
+    <mat-card-title [class]="'text-[20px]'" [style.margin-bottom.px]="10">Post what you'r thinking</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
     <form [formGroup]="postForm" (ngSubmit)="submit()">
-        <p>User name:</p>
-        <input type="text" formControlName="user">
-        <p>Content:</p>
-        <input type="text" formControlName="content"> 
-        <button [disabled]="postForm.invalid">Submit</button>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your user name</mat-label>
+          <input matInput placeholder="Ex. Matias H." formControlName="user">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Your thoughts</mat-label>
+          <input matInput placeholder="Ex. Hello World!" formControlName="content">
+        </mat-form-field>
+      </p>
+        <button matButton [disabled]="postForm.invalid">Submit</button>
     </form>
-</div>
+  </mat-card-content>
+</mat-card>
+

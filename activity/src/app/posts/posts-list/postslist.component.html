@@ -1,4 +1,4 @@
-<h1>List of Posts</h1>
+<h1 [class]="'text-[20px]'">List of Posts</h1>
 @if (store.vm$ | async; as vm) {
   <ul [class]="'list-none'">
       @for (post of vm.posts; track post){
@@ -9,5 +9,5 @@
         <p>There are no items.</p>
       }
   </ul>
-  <button [routerLink]="['..','create']">Make a post</button>
+  <button matButton [routerLink]="['..','create']">Make a post</button>
 }
